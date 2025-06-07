@@ -1,0 +1,277 @@
+/* ========== RESET & BASE ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e6f0fa; /* lighter blue-tinted background for contrast */
+  color: #002147; /* deep Intel blue for text */
+  overflow-x: hidden;
+}
+
+/* ========== HERO SECTION ========== */
+header {
+  height: 100vh;
+  background: linear-gradient(135deg, #0068b5, #00a6d6); /* deeper Intel blues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+header img {
+  width: 120px;
+  margin-bottom: 20px;
+  animation: fadeDown 1.2s ease forwards;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+header p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  animation-delay: 0.6s;
+}
+
+header::after {
+  content: "▼";
+  font-size: 2rem;
+  position: absolute;
+  bottom: 30px;
+  animation: bounce 2s infinite;
+  opacity: 0.7;
+  color: #fff;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ========== TIMELINE SECTION ========== */
+/* The timeline section uses flexbox for a horizontal scrollable layout */
+.timeline-section .row {
+  display: flex; /* Arrange timeline items in a row */
+  flex-direction: row; /* Horizontal direction */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  gap: 24px; /* Space between timeline items */
+  padding: 60px 40px; /* Space around the section */
+  scroll-snap-type: x mandatory; /* Snap scrolling for smooth navigation */
+  scroll-behavior: smooth; /* Smooth scroll effect */
+  background-color: #f4faff; /* very light blue for contrast */
+  color: #002147; /* deep blue text */
+}
+
+/* Custom horizontal scrollbar for the timeline */
+.timeline-section .row::-webkit-scrollbar {
+  height: 10px;
+}
+.timeline-section .row::-webkit-scrollbar-thumb {
+  background: #0071C5;
+  border-radius: 10px;
+}
+
+/* Each timeline card/item */
+.timeline-section .col {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 105, 180, 0.10);
+  padding: 20px;
+  scroll-snap-align: start; /* Snap each card to the start */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card hover effect for individual timeline cards using Bootstrap grid */
+.timeline-section .row > .col:hover,
+.timeline-section .row > [class^="col-"]:hover,
+.timeline-section .row > [class*=" col-"]:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 105, 180, 0.18);
+  background: #e0f4ff; /* subtle blue highlight on hover */
+  z-index: 2;
+}
+
+/* Timeline subheading */
+section h2 {
+  font-size: 1rem;
+  color: #0068b5; /* Intel blue for subheadings */
+  margin-bottom: 4px;
+}
+
+/* Timeline main heading */
+section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #003d73; /* deeper blue for main headings */
+}
+
+/* Timeline images */
+section img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Timeline text */
+section p {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+  color: #002147; /* deep blue for text */
+}
+
+/* ========== HOVER REVEAL EFFECT ========== */
+/* Shows a hint on each card, hidden on hover */
+.timeline-section .row > .col::after,
+.timeline-section .row > [class^="col-"]::after,
+.timeline-section .row > [class*=" col-"]::after {
+  content: "Hover for details";
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 0.75rem;
+  color: #0068b5; /* Intel blue for hint */
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.timeline-section .row > .col:hover::after,
+.timeline-section .row > [class^="col-"]:hover::after,
+.timeline-section .row > [class*=" col-"]:hover::after {
+  opacity: 0;
+}
+
+.timeline-section .row > .col:hover p,
+.timeline-section .row > [class^="col-"]:hover p,
+.timeline-section .row > [class*=" col-"]:hover p {
+  opacity: 1;
+}
+
+.timeline-section .row > .col .details,
+.timeline-section .row > [class^="col-"] .details,
+.timeline-section .row > [class*=" col-"] .details {
+  display: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, max-height 0.3s;
+}
+
+.timeline-section .row > .col:hover .details,
+.timeline-section .row > [class^="col-"]:hover .details,
+.timeline-section .row > [class*=" col-"]:hover .details {
+  display: block;
+  opacity: 1;
+  max-height: 200px; /* adjust as needed */
+  margin-top: 10px;
+}
+
+/* ========== RESPONSIVE STACKING ON SMALL SCREENS ========== */
+@media (max-width: 768px) {
+  section {
+    flex-direction: column; /* Stack cards vertically on small screens */
+    overflow-x: hidden;
+    gap: 20px;
+    padding: 40px 20px;
+  }
+
+  section > div {
+    flex: 1 1 100%; /* Cards take full width */
+  }
+}
+
+/* ========== FOOTER MESSAGE ========== */
+body > p:last-of-type {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  background: #d0e7fa;
+  color: #003d73;
+}
+
+/* ========== INFO SECTION ========== */
+/* Card hover effect for individual info cards at the bottom */
+.info-section .row > .col:hover,
+.info-section .row > [class^="col-"]:hover,
+.info-section .row > [class*=" col-"]:hover {
+  background: #e0f4ff; /* subtle blue highlight on hover */
+  box-shadow: 0 8px 24px rgba(0, 105, 180, 0.18);
+  transition: transform 0.35s cubic-bezier(.4,2,.6,1), box-shadow 0.35s cubic-bezier(.4,2,.6,1);
+  z-index: 2;
+}
+
+.info-section .row > .col,
+.info-section .row > [class^="col-"],
+.info-section .row > [class*=" col-"] {
+  background: #ffffff;
+  color: #002147;
+  transition: transform 0.35s cubic-bezier(.4,2,.6,1), box-shadow 0.35s cubic-bezier(.4,2,.6,1);
+}
+
+/* ========== LEARN MORE LINK STYLES ========== */
+.learn-more-link {
+  color: #003c71; /* Darker Intel blue for better contrast */
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid #003c71;
+  transition: color 0.2s, border-color 0.2s;
+  padding-bottom: 2px;
+}
+.learn-more-link:hover, .learn-more-link:focus {
+  color: #0071c5; /* Lighter blue on hover for effect */
+  border-color: #0071c5;
+  text-decoration: underline;
+}
